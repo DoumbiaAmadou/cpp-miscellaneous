@@ -6,13 +6,12 @@ using namespace std;
 
 /**
  * Eg:
- * @brief 
- * 
+ * @brief
+ *
 
-	{{1,1,0,1},
 	{1,1,1,1},
 	{1,1,1,1},
-	{1,1,1,0}   
+	{1,1,1,0}
 	} ;
  */
 /*eg:
@@ -20,7 +19,8 @@ using namespace std;
 		{0,1,1,1,1},
 		{0,1,1,1,1},
 		{0,1,1,1,1},
-		{0,1,1,1,1}   } ;
+		{0,1,1,1,1}
+} ;
 */
 class Solution
 {
@@ -45,6 +45,13 @@ class Solution
 	}
 
 public:
+	/**
+	 * @brief Func countSquares :
+	 * Count number  submatrix full to 1.
+	 *
+	 * @param matrix
+	 * @return int  result
+	 */
 	int countSquares(vector<vector<int>> &matrix)
 	{
 		vector<vector<int>> a = matrix;
@@ -54,12 +61,12 @@ public:
 		{
 			for (int j = 0; j < m; j++)
 			{
-				if (i * j == 0)
-					continue;
-				if (a[i][j] == 1)
+				if (i * j != 0)
 				{
-					// vector<int> v = {a[i-1][j-1],a[i-1][j],a[i][j-1]} ;
-					a[i][j] = min({a[i - 1][j - 1], a[i - 1][j], a[i][j - 1]}) + 1;
+					if (a[i][j] == 1)
+					{
+						a[i][j] = min({a[i - 1][j - 1], a[i - 1][j], a[i][j - 1]}) + 1;
+					}
 				}
 			}
 		}
@@ -68,38 +75,38 @@ public:
 		{
 			for (auto y : x)
 			{
-				// cout << ' ' << y << ' ';
 				if (y > ans)
 					ans = y;
 			}
-			// cout << endl;
 		}
 
 		return ans;
 	}
 
+	/**
+	 * @brief Func maxSubSquare :
+	 * Count number  submatrix full to 1.
+	 * an another algorythm.
+	 *
+	 * @param matrix
+	 * @return int  result
+	 *
+	 */
 	int maxSubSquare(vector<vector<int>> &matrix)
 	{
 		int maxS = 0;
 
-		for (int i = 0; i < matrix.size(); i++)
 		{
-			for (int j = 0; j < matrix[0].size(); j++)
-			{
+			for (int i = 0; i < matrix.size(); i++)
+				for (int j = 0; j < matrix[0].size(); j++)
+				{
 
-				if (matrix[i][j] == 1)
-				{
-					int res = 1 + checkUp(i, j, matrix);
-					maxS = max(res, maxS);
-					// dispay
-					//  cout <<" i:"<<i <<" j:"<<j<<" res:"<< 1+  checkUp(i,j,matrix )<< "  ";
+					if (matrix[i][j] == 1)
+					{
+						int res = 1 + checkUp(i, j, matrix);
+						maxS = max(res, maxS);
+					}
 				}
-				else
-				{
-					// cout <<"              ";
-				}
-			}
-			// cout << endl;
 		}
 		return maxS;
 	}
@@ -107,13 +114,12 @@ public:
 
 int main()
 {
-	vector<vector<int>> val = {{1, 1, 0, 1},
+	vector<vector<int>> val = {{1, 1, 1, 1},
 														 {1, 1, 1, 1},
-														 {1, 1, 1, 1},
+														 {1, 1, 1, 0},
 														 {1, 1, 1, 0}};
 
 	Solution s;
-	cout<<"|solution1 =>"<< s.countSquares(val)<< endl;
-	cout<<"|solution2 =>"<< s.maxSubSquare(val)<<endl;
-
+	cout << "|solution1 => " << s.countSquares(val) << endl;
+	cout << "|solution2 => " << s.maxSubSquare(val) << endl;
 }

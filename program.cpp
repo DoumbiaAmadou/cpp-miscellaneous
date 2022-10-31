@@ -2,7 +2,7 @@
 #include <iostream>
 #include <limits>
 #include <string>
-using namespace std ; 
+using namespace std;
 
 struct Person
 {
@@ -10,7 +10,7 @@ struct Person
     string prenom{""};
     string sexe{""};
     int age{0};
-};  
+};
 
 template <typename T>
 void entree_securisee(T &variable)
@@ -34,7 +34,7 @@ void entree_securisee(T &variable, Predicat predicat)
     }
 }
 
-void demander_infos( Person &p )
+void demander_infos(Person &p)
 {
     std::cout << "Nom ? ";
     entree_securisee(p.nom);
@@ -47,28 +47,29 @@ void demander_infos( Person &p )
                      { return age >= 0; });
 }
 
-std::string enregistrer_infos( const Person &person)
+std::string enregistrer_infos(const Person &person)
 {
     string nom_fichier{person.prenom + "." + person.nom + ".csv"};
     ofstream fichierOuvert{nom_fichier};
-    fichierOuvert << person.nom << ',' << person.prenom << ',' << person.sexe << ',' << person.age;
+    fichierOuvert << person.nom << ',' << person.prenom << ',' << person.sexe << ',' << person.age << endl;
 
     return nom_fichier;
 }
 
 int main()
 {
-    Person  p ; 
+    Person p;
 
     demander_infos(p);
-    auto save = [&](const Person &person){
-        string name = {person.nom +"."+person.prenom+".csv"}; 
+    auto save = [&](const Person &person)
+    {
+        string name = {person.nom + "." + person.prenom + ".csv"};
         ofstream fichieOuvert{name};
-        fichieOuvert << person.prenom<<','<<person.nom<<','<<person.sexe <<','<< person.age ; 
-          return name; 
+        fichieOuvert << person.prenom << ',' << person.nom << ',' << person.sexe << ',' << person.age << endl;
+        return name;
     };
 
-    string nom_fichier = save(p) ; // enregistrer_infos(p);
+    string nom_fichier = save(p); // enregistrer_infos(p);
     std::cout << std::endl
               << "Ces données seront enregistrées dans le fichier " << nom_fichier << std::endl;
 
